@@ -10,7 +10,22 @@ router.get('/auth', function(req, res, next) {
 	console.log(req.query.code);
 	console.log(req.query.code.length);
     if (req.query.code.length > 0) {
-    	res.render('success', { title: 'Success!', auth_message:'You have successfully authenticated. You should begin seeing test data in your portal shortly.', code:req.query.code});
+    	axios.post('https://api.hubapi.com/oauth/v1/token', {
+		    grant_type:'authorization_code',
+		    client_id:process.env.HS_CLIENT_ID,
+		    client_secret:process.env.HS_CLIENT_SECRET,
+		    redirect_uri='https://hs-test-data.herokuapp.com/',
+		    code=req.query.code
+		  })
+		  .then(function (response) {
+		  	var access_token = response.access_token
+		    console.log(response);
+		    res.render('success', { title: 'Success!', access_token:response.access_token,auth_message:'You have successfully authenticated. You should begin seeing test data in your portal shortly.', code:req.query.code});
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		    res.render('success', { title: 'There was an issue.',auth_message:'Something went wrong.' });
+		  });
     }
     else{
     	res.render('success', { title: 'There was an issue.',auth_message:'Something went wrong.' });
