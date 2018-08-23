@@ -20,9 +20,9 @@ router.get('/auth', function(req, res, next) {
 		    code:req.query.code
 		  }))
 		  .then(function (response) {
-		  	var access_token = response.access_token
+		  	var access_token = response.data.access_token
 		    console.log(response);
-		    res.render('success', { title: 'Success!', access_token:response.access_token, auth_message:'You have successfully authenticated. You should begin seeing test data in your portal shortly.'});
+		    res.render('success', { title: 'Success!', access_token:response.data.access_token, auth_message:'You have successfully authenticated. You should begin seeing test data in your portal shortly.'});
 		  })
 		  .catch(function (error) {
 		    console.log(error);
