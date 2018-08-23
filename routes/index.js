@@ -16,7 +16,7 @@ router.get('/auth', function(req, res, next) {
 		    grant_type:'authorization_code',
 		    client_id:process.env.HS_CLIENT_ID,
 		    client_secret:process.env.HS_CLIENT_SECRET,
-		    redirect_uri:'https://hs-test-data.herokuapp.com/',
+		    redirect_uri:'https://hs-test-data.herokuapp.com/auth',
 		    code:req.query.code
 		  }))
 		  .then(function (response) {
