@@ -13,6 +13,11 @@ router.get('/bot', function(req, res, next) {
 	res.send(200);
 });
 
+router.post('/bot', function(req, res, next) {
+	console.log(req.body);
+	res.send(200);
+});
+
 router.get('/auth', function(req, res, next) {
     if (req.query.code.length > 0) {
     	axios.post('https://api.hubapi.com/oauth/v1/token', qs.stringify({
